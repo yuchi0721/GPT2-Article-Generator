@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+{% load static %}
+<html>
+
+<head>
+    <title>AI智能文章寫手</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <meta name="description" content="" />
+    <meta name="author" content="" />
+    <title>Creative - Start Bootstrap Theme</title>
+    <!-- Favicon-->
+    <link rel="icon" type="image/x-icon" href="{% static 'assets/favicon.ico' %}" />
+    <!-- Bootstrap Icons-->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css" rel="stylesheet" />
+    <!-- Google fonts-->
+    <link href="https://fonts.googleapis.com/css?family=Merriweather+Sans:400,700" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css?family=Merriweather:400,300,300italic,400italic,700,700italic"
+        rel="stylesheet" type="text/css" />
+    <!-- SimpleLightbox plugin CSS-->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/SimpleLightbox/2.1.0/simpleLightbox.min.css" rel="stylesheet" />
+    <!-- Core theme CSS (includes Bootstrap)-->
+    <link href="{% static 'css/styles.css' %}" rel="stylesheet" />
+    <style>
+        body {
+            background-color: rgb(255, 225, 185);
+        }
+
+        em {
+            color: LightSeaGreen;
+        }
+
+        #output {
+            height: 300px;
+            width: 60%;
+            text-align: left;
+        }
+        .main{
+            text-align: center;
+            margin-top: 3%;
+            margin-bottom: 3%;
+        }
+        .generate_label{
+            font-size: x-large;
+            font-weight: bold;
+            margin-left:1%;
+        }
+    </style>
+</head>
+
+<body>
+
+    <body id="page-top">
+        <!-- Navigation-->
+        <nav class="navbar navbar-expand-lg navbar-light fixed-top py-3" id="mainNav">
+            <div class="container px-4 px-lg-5">
+                <a class="navbar-brand" href="/index">AI writer</a>
+                <button class="navbar-toggler navbar-toggler-right" type="button" data-bs-toggle="collapse"
+                    data-bs-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false"
+                    aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
+                <div class="collapse navbar-collapse" id="navbarResponsive">
+                    <ul class="navbar-nav ms-auto my-2 my-lg-0">
+                        <li class="nav-item"><a class="nav-link" href="/index#about">About</a></li>
+                        <li class="nav-item"><a class="nav-link" href="/index#services">Services</a></li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+        <!-- Masthead-->
+        <header class="masthead">
+            <div class="container px-4 px-lg-5 h-100">
+                <div class="row gx-4 gx-lg-5 h-100 align-items-center justify-content-center text-center">
+                    <div class="col-lg-8 align-self-end">
+                        <h1 class="text-white font-weight-bold">AI智能文章寫手</h1>
+                        <hr class="divider" />
+                    </div>
+                    <div class="col-lg-8 align-self-baseline">
+                        <p class="text-white-75 mb-5">此工具將大幅降低您建立連結的工作時間</p>
+                    </div>
+                </div>
+            </div>
+        </header>
+        <!--main function-->
+        <div class="main">
+            <form method="POST">
+                {% csrf_token %}
+                <label class="generate_label keyword_lable">關鍵字</label>
+                <input type="text" name="keyword" id="keyword" required />
+                <label class="generate_label industry_lable">產業</label>
+                <select id="industry" name="industry">
+                    <option value="makeup">美妝保養</option>
+                    <option value="education">教育</option>
+                </select>
+                <label class="generate_label length_lable">段落字數</label>
+                <input type="number" name="length" id="length" required />
+                <label class="generate_label paragraph_lable">產生段落數</label>
+                <input type="number" name="paragraph" id="paragraph" required />
+                <button type="submit" id="generate_btn">一鍵生成</button><br />
+                <label id="wait_message"></label><br />
+                <textarea id="output" name="output" readonly>
+                    {{produced_content}}
+            </textarea>
+            </form>
+
+        </div>
+        <!-- Footer-->
+        <footer class="bg-light py-5">
+            <div class="container px-4 px-lg-5">
+                <div class="small text-center text-muted">Copyright &copy; 2021 - IBA SEO Team Intern — Jeff．Lin</div>
+            </div>
+        </footer>
+    </body>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script>
+        $('#generate_btn').click(() => {
+            if($('#keyword').val()==''||$('#length').val()==''||$('#paragraph').val()==''){
+                $('#wait_message').text('請輸入正確資料')
+            }
+            else{
+                $('#wait_message').text('因處理速度受裝置限制，請等待數分鐘....')
+                $('#generate_btn').disabled=true;
+            }
+        })
+    </script>
+
+</html>
